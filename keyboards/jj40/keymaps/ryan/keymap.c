@@ -78,19 +78,9 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * `-----------------------------------------------------------------------------------'
  */
  [_RAISE] = KEYMAP( \
-    KC_GRV,  KC_INSERT,   KC_PGUP, KC_HOME, KC_LBRC, KC_RBRC,  KC_LPRN,    KC_7,    KC_8,              KC_9,   KC_RPRN, _______, \
-   _______,  KC_DELETE, KC_PGDOWN,  KC_END, _______, _______,   KC_EQL,    KC_4,    KC_5,              KC_6,   S(KC_8), _______, \
-   KC_LSFT, KC_PSCREEN,   _______, _______, _______, _______,  KC_MINS,    KC_1,    KC_2,              KC_3,   KC_SLSH,  KC_ENT, \
-   KC_LCTL,    KC_LGUI,   KC_LALT, KC_NUHS, _______,      KC_SPC      , _______,    KC_0,    ALGR_T(KC_DOT), _______, KC_MENU \
+   KC_NUMLOCK, KC_KP_7, KC_KP_8,   KC_KP_9,     KC_KP_PLUS, KC_KP_MINUS, _______,   KC_F9,   KC_F10,  KC_F11, KC_F12, KC_SYSREQ, \
+      _______, KC_KP_4, KC_KP_5,   KC_KP_6, KC_KP_ASTERISK, KC_KP_SLASH, _______,   KC_F5,    KC_F6,   KC_F7,  KC_F8,   _______, \
+      _______, KC_KP_1, KC_KP_2,   KC_KP_3,        _______,     _______, _______,   KC_F1,    KC_F2,   KC_F3,  KC_F4,   _______, \
+      _______, _______, KC_KP_0, KC_KP_DOT,        _______,          KC_SPC     , _______, _______, _______, _______,   _______ \
  )
-};
-
- /*
-[_RAISE] = KEYMAP( \
-  KC_NUMLOCK, KC_KP_7, KC_KP_8,   KC_KP_9,     KC_KP_PLUS, KC_KP_MINUS, _______,   KC_F9,   KC_F10,  KC_F11, KC_F12, KC_SYSREQ, \
-     _______, KC_KP_4, KC_KP_5,   KC_KP_6, KC_KP_ASTERISK, KC_KP_SLASH, _______,   KC_F5,    KC_F6,   KC_F7,  KC_F8,   _______, \
-     _______, KC_KP_1, KC_KP_2,   KC_KP_3,        _______,     _______, _______,   KC_F1,    KC_F2,   KC_F3,  KC_F4,   _______, \
-     _______, _______, KC_KP_0, KC_KP_DOT,        _______,          KC_SPC     , _______, _______, _______, _______,   _______ \
-)
-};
-*/
+ };
