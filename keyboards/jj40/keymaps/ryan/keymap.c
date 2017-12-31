@@ -21,11 +21,12 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #define _QWERTY 0
 #define _LOWER  1
 #define _RAISE  2
+#define KEYMAP KEYMAP_MIT
 
 enum custom_keycodes {
   QWERTY = SAFE_RANGE,
   LOWER,
-  RAISE,
+  RAISE
 };
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
@@ -41,10 +42,10 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * `-----------------------------------------------------------------------------------'
  */
 [_QWERTY] = KEYMAP( \
-  KC_TAB,  KC_Q,    KC_W,    KC_E,    KC_R,    KC_T,    KC_Y,    KC_U,    KC_I,    KC_O,    KC_P,    KC_BSPC, \
-  KC_ESC,  KC_A,    KC_S,    KC_D,    KC_F,    KC_G,    KC_H,    KC_J,    KC_K,    KC_L,    KC_SCLN, KC_QUOT, \
-  KC_LSFT, KC_Z,    KC_X,    KC_C,    KC_V,    KC_B,    KC_N,    KC_M,    KC_COMM, KC_DOT,  KC_SLSH, KC_ENT , \
-  KC_LCTL, KC_LGUI, KC_LALT, KC_NONUS_BSLASH, MO(_LOWER),  KC_SPC,  MO(_RAISE),   KC_LEFT, KC_DOWN, KC_UP,   KC_RGHT \
+   KC_TAB,    KC_Q, KC_W,               KC_E,       KC_R,      KC_T,    KC_Y,          KC_U,    KC_I,    KC_O,    KC_P, KC_BSPC, \
+   KC_ESC,    KC_A, KC_S,               KC_D,       KC_F,      KC_G,    KC_H,          KC_J,    KC_K,    KC_L, KC_SCLN, KC_QUOT, \
+  KC_LSFT,    KC_Z, KC_X,               KC_C,       KC_V,      KC_B,    KC_N,          KC_M, KC_COMM,  KC_DOT, KC_SLSH, KC_ENT , \
+  KC_LCTL, KC_LGUI, KC_LALT, KC_NONUS_BSLASH, MO(_LOWER),         KC_SPC    ,    MO(_RAISE), KC_LEFT, KC_DOWN,   KC_UP,  KC_RGHT \
 ),
 
 /* Lower
@@ -55,31 +56,41 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * |------+------+------+------+------+------|------+------+------+------+------+------|
  * |LSHIFT|PSCRN |      |      |      |      |  -_  |  1!  |  2"  |  3£  |  /?  |ENTER |
  * |------+------+------+------+------+------+------+------+------+------+------+------|
- * | Ctrl | GUI  | Alt  |  #~  |      |    Space    |      |   0) | RAlt |  .>  | MENU |
+ * | Ctrl | GUI  | Alt  |  #~  |      |    Space    |      |   0) |  .>  |      | MENU |
  * `-----------------------------------------------------------------------------------'
  */
 [_LOWER] = KEYMAP( \
-   KC_GRV,  KC_INSERT,   KC_PGUP, KC_HOME, KC_LBRC, KC_RBRC,  KC_LPRN,    KC_7,    KC_8,    KC_9, KC_RPRN, _______, \
-  _______,  KC_DELETE, KC_PGDOWN,  KC_END, _______, _______,   KC_EQL,    KC_4,    KC_5,    KC_6, S(KC_8), _______, \
-  KC_LSFT, KC_PSCREEN,   _______, _______, _______, _______,  KC_MINS,    KC_1,    KC_2,    KC_3, KC_SLSH,  KC_ENT, \
-  KC_LCTL,    KC_LGUI,   KC_LALT, KC_NUHS, _______,      KC_SPC      , _______,    KC_0, KC_LALT,  KC_DOT, KC_MENU \
+   KC_GRV,  KC_INSERT,   KC_PGUP, KC_HOME, KC_LBRC, KC_RBRC,  KC_LPRN,    KC_7,    KC_8,              KC_9,   KC_RPRN, _______, \
+  _______,  KC_DELETE, KC_PGDOWN,  KC_END, _______, _______,   KC_EQL,    KC_4,    KC_5,              KC_6,   S(KC_8), _______, \
+  KC_LSFT, KC_PSCREEN,   _______, _______, _______, _______,  KC_MINS,    KC_1,    KC_2,              KC_3,   KC_SLSH,  KC_ENT, \
+  KC_LCTL,    KC_LGUI,   KC_LALT, KC_NUHS, _______,      KC_SPC      , _______,    KC_0,    ALGR_T(KC_DOT), _______, KC_MENU \
 ),
 
 /* Raise
  * ,-----------------------------------------------------------------------------------.
- * |      |      |      |      |      |      |      |      |      |      |      |SysReq|
+ * | NUMLK|   7  |   8  |   9  |   +  |   -  |      |  F9  |  F10 |  F11 |  F12 |SysReq|
  * |------+------+------+------+------+-------------+------+------+------+------+------|
- * |      |      |      |      |      |      |      |      |      |      |      |      |
+ * |      |   4  |   5  |   6  |   *  |   /  |      |  F5  |  F6  |  F7  |  F8  |      |
  * |------+------+------+------+------+------|------+------+------+------+------+------|
- * |      |      |      |      |      |      |      |      |      |      |      |      |
+ * |      |   1  |   2  |   3  |      |      |      |  F1  |  F2  |  F3  |  F4  |      |
  * |------+------+------+------+------+------+------+------+------+------+------+------|
- * |      |      |      |      |      |    Space    |      |      |      |      |      |
+ * |      |      |   0  |   .  |      |    Space    |      |      |      |      |      |
  * `-----------------------------------------------------------------------------------'
  */
+ [_RAISE] = KEYMAP( \
+    KC_GRV,  KC_INSERT,   KC_PGUP, KC_HOME, KC_LBRC, KC_RBRC,  KC_LPRN,    KC_7,    KC_8,              KC_9,   KC_RPRN, _______, \
+   _______,  KC_DELETE, KC_PGDOWN,  KC_END, _______, _______,   KC_EQL,    KC_4,    KC_5,              KC_6,   S(KC_8), _______, \
+   KC_LSFT, KC_PSCREEN,   _______, _______, _______, _______,  KC_MINS,    KC_1,    KC_2,              KC_3,   KC_SLSH,  KC_ENT, \
+   KC_LCTL,    KC_LGUI,   KC_LALT, KC_NUHS, _______,      KC_SPC      , _______,    KC_0,    ALGR_T(KC_DOT), _______, KC_MENU \
+ )
+};
+
+ /*
 [_RAISE] = KEYMAP( \
-  _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, KC_SYSREQ, \
-  _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, \
-  _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, \
-  _______, _______, _______, _______, _______,      KC_SPC     , _______, _______, _______, _______, _______ \
+  KC_NUMLOCK, KC_KP_7, KC_KP_8,   KC_KP_9,     KC_KP_PLUS, KC_KP_MINUS, _______,   KC_F9,   KC_F10,  KC_F11, KC_F12, KC_SYSREQ, \
+     _______, KC_KP_4, KC_KP_5,   KC_KP_6, KC_KP_ASTERISK, KC_KP_SLASH, _______,   KC_F5,    KC_F6,   KC_F7,  KC_F8,   _______, \
+     _______, KC_KP_1, KC_KP_2,   KC_KP_3,        _______,     _______, _______,   KC_F1,    KC_F2,   KC_F3,  KC_F4,   _______, \
+     _______, _______, KC_KP_0, KC_KP_DOT,        _______,          KC_SPC     , _______, _______, _______, _______,   _______ \
 )
 };
+*/
