@@ -885,6 +885,7 @@ void backlight_set(uint8_t level) {}
 
 uint8_t backlight_tick = 0;
 
+__attribute__ ((weak))  // TODO HACK <- add this
 void backlight_task(void) {
   if ((0xFFFF >> ((BACKLIGHT_LEVELS - get_backlight_level()) * ((BACKLIGHT_LEVELS + 1) / 2))) & (1 << backlight_tick)) {
     #if BACKLIGHT_ON_STATE == 0

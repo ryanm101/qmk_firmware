@@ -1,0 +1,708 @@
+[
+  {
+    "backcolor": "#bababa",
+    "name": "JJ40 MIT",
+    "author": "ryanm101",
+    "notes": "https://github.com/ryanm101/qmk_firmware/tree/PersonalLayout/keyboards/jj40/keymaps/ryan\n\n- RAISED Layer \"QWERTY KEY\" Sets active layer as base\n- RAISE Key on base layer will go to raise layer momentarily on hold, on multitap will toggle raised layer\n- \".\" key on lower layer will \".\" on press and \"ALTGR\" on hold",
+    "background": {
+      "name": "Steel brushed horizontal",
+      "style": "background-image: url('/bg/metal/iron_texture66.jpg');"
+    },
+    "switchMount": "cherry",
+    "switchBrand": "gateron",
+    "switchType": "KS-3-Black",
+    "plate": true
+  },
+  [
+    {
+      "c": "#727474",
+      "fa": [
+        1
+      ]
+    },
+    "sysreq\n`\n\n¬\n\n\n\n\n\nTab",
+    {
+      "c": "#e1dbd1",
+      "fa": [
+        1,
+        1,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        1
+      ]
+    },
+    "F9\nINSERT\n\n\n\n\n\n\n\nQ",
+    "F10\nPGUP\n\n\n\n\n\n\n\nW",
+    "F11\nHOME\n\n\n\n\n\n\n\nE",
+    {
+      "fa": [
+        1,
+        2,
+        0,
+        2,
+        0,
+        0,
+        0,
+        0,
+        0,
+        2
+      ]
+    },
+    "F12\n[\n\n{\n\n\n\n\n\nR",
+    "\n]\n\n}\n\n\n\n\n\nT",
+    {
+      "fa": [
+        1,
+        2
+      ]
+    },
+    "numlock\n(\n\n\n\n\n\n\n\nY",
+    {
+      "fa": [
+        1,
+        2,
+        0,
+        2,
+        0,
+        0,
+        0,
+        0,
+        0,
+        2
+      ]
+    },
+    "KP7\n7\n\n&\n\n\n\n\n\nU",
+    {
+      "fa": [
+        1
+      ]
+    },
+    "KP8\n8\n\n*\n\n\n\n\n\nI",
+    "KP9\n9\n\n(\n\n\n\n\n\nO",
+    "KP *\n)\n\n\n\n\n\n\n\nP",
+    {
+      "c": "#727474",
+      "fa": [
+        1,
+        1
+      ]
+    },
+    "Bksp\nBksp\n\n\n\n\n\n\n\nBksp"
+  ],
+  [
+    {
+      "a": 7,
+      "f": 3
+    },
+    "Esc",
+    {
+      "c": "#e1dbd1",
+      "a": 4,
+      "f": 3
+    },
+    "F5\nDELETE\n\n\n\n\n\n\n\nA",
+    {
+      "f": 3
+    },
+    "F6\nPGDN\n\n\n\n\n\n\n\nS",
+    {
+      "f": 3
+    },
+    "F7\nEND\n\n\n\n\n\n\n\nD",
+    {
+      "f": 3
+    },
+    "F8\n\n\n\n\n\n\n\n\nF",
+    {
+      "a": 7,
+      "f": 3
+    },
+    "G",
+    {
+      "a": 4,
+      "fa": [
+        1,
+        0,
+        1
+      ]
+    },
+    "\n=\nLFT\n+\n\n\n\n\n\nH",
+    "KP4\n4\nDWN\n$\n\n\n\n\n\nJ",
+    "KP5\n5\nUP\n%\n\n\n\n\n\nK",
+    "KP6\n6\nRGT\n^\n\n\n\n\n\nL",
+    "KP /\n*\n\n\n\n\n\n\n\n;",
+    {
+      "c": "#727474",
+      "a": 7,
+      "f": 3
+    },
+    "'"
+  ],
+  [
+    {
+      "a": 4,
+      "fa": [
+        1,
+        2
+      ]
+    },
+    "\nShift\n\n\n\n\n\n\n\nShift",
+    {
+      "c": "#e1dbd1",
+      "fa": [
+        1,
+        1
+      ]
+    },
+    "F1\nPSCRN\n\n\n\n\n\n\n\nZ",
+    "F2\n\n\n\n\n\n\n\n\nX",
+    "F3\n\n\n\n\n\n\n\n\nC",
+    "F4\n\n\n\n\n\n\n\n\nV",
+    {
+      "a": 7,
+      "f": 3
+    },
+    "B",
+    {
+      "a": 4,
+      "f": 3
+    },
+    "\n-\n\n_\n\n\n\n\n\nN",
+    {
+      "fa": [
+        1
+      ]
+    },
+    "KP1\n1\n\n!\n\n\n\n\n\nM",
+    "KP2\n2\n\n\"\n\n\n\n\n\n,",
+    "KP3\n3\n\n£\n\n\n\n\n\n.",
+    "KP  +\n/\n\n?\n\n\n\n\n\n/",
+    {
+      "c": "#727474"
+    },
+    "KP Enter\n\n\n\n\n\n\n\n\nEnter"
+  ],
+  [
+    {
+      "fa": [
+        2,
+        2
+      ]
+    },
+    "Ctrl\nCtrl\n\n\n\n\n\n\n\nCrtl",
+    "GUI\nGUI\n\n\n\n\n\n\n\nGUI",
+    "Alt\nAlt\n\n\n\n\n\n\n\nAlt",
+    {
+      "f": 3
+    },
+    "\n#\n\n~\n\n\n\n|\n\n\\",
+    {
+      "c": "#84cbcb",
+      "f": 3
+    },
+    "qwerty\n\n\n\n\n\n\n\n\nLower",
+    {
+      "c": "#e1dbd1",
+      "fa": [
+        1,
+        1
+      ],
+      "w": 2
+    },
+    "Space\nSpace\n\n\n\n\n\n\n\nSpace",
+    {
+      "c": "#fd5151",
+      "a": 7,
+      "f": 3
+    },
+    "Raise",
+    {
+      "c": "#727474",
+      "a": 4,
+      "fa": [
+        1
+      ]
+    },
+    "KP0\n0\n\n)\n\n\n\n\n\nLeft",
+    {
+      "fa": [
+        1,
+        0,
+        0,
+        1
+      ]
+    },
+    "KP .\n.>\n\n(altgr)\n\n\n\n\n\nDown",
+    "KP -\n\n\n\n\n\n\n\n\nUp",
+    {
+      "fa": [
+        1,
+        1
+      ]
+    },
+    "\nMENU\n\n\n\n\n\n\n\nRight"
+  ],
+  [
+    {
+      "y": 1,
+      "c": "#84cbcb",
+      "a": 5,
+      "f": 3
+    },
+    "¬\n`",
+    {
+      "a": 7,
+      "fa": [
+        2
+      ]
+    },
+    "INSERT",
+    {
+      "f": 3
+    },
+    "PGUP",
+    {
+      "f": 3
+    },
+    "HOME",
+    {
+      "a": 5,
+      "f": 3
+    },
+    "}\n\n\n\n\n\n]",
+    {
+      "a": 7
+    },
+    "",
+    {
+      "f": 3
+    },
+    "(",
+    {
+      "a": 5,
+      "f": 3
+    },
+    "&\n\n\n\n\n\n7",
+    {
+      "f": 3
+    },
+    "*\n\n\n\n\n\n8",
+    {
+      "f": 3
+    },
+    "(\n\n\n\n\n\n9",
+    {
+      "a": 7,
+      "f": 3
+    },
+    ")",
+    {
+      "f": 3
+    },
+    "Bksp"
+  ],
+  [
+    "",
+    {
+      "f": 3
+    },
+    "Delete",
+    {
+      "f": 3
+    },
+    "PGDN",
+    {
+      "f": 3
+    },
+    "END",
+    {
+      "a": 5,
+      "f": 3
+    },
+    "{\n\n\n\n\n\n[",
+    {
+      "a": 7
+    },
+    "",
+    {
+      "a": 5,
+      "f": 3
+    },
+    "+\n\n\n\n\n\n=",
+    {
+      "f": 3
+    },
+    "$\n\n\n\n\n\n4",
+    {
+      "f": 3
+    },
+    "%\n\n\n\n\n\n5",
+    {
+      "f": 3
+    },
+    "^\n\n\n\n\n\n6",
+    {
+      "a": 7,
+      "f": 3
+    },
+    "*",
+    ""
+  ],
+  [
+    {
+      "f": 3
+    },
+    "Shift",
+    {
+      "f": 3
+    },
+    "PRTSC",
+    "",
+    "",
+    {
+      "c": "#57c942",
+      "f": 3
+    },
+    "(ninja)",
+    {
+      "c": "#84cbcb"
+    },
+    "",
+    {
+      "a": 5,
+      "f": 3
+    },
+    "_\n\n\n\n\n\n-",
+    {
+      "f": 3
+    },
+    "!\n\n\n\n\n\n1",
+    {
+      "f": 3
+    },
+    "\"\n\n\n\n\n\n2",
+    {
+      "f": 3
+    },
+    "£\n\n\n\n\n\n3",
+    {
+      "f": 3
+    },
+    "?\n\n\n\n\n\n/",
+    {
+      "a": 7
+    },
+    ""
+  ],
+  [
+    {
+      "f": 3
+    },
+    "Ctrl",
+    {
+      "f": 3
+    },
+    "GUI",
+    {
+      "f": 3
+    },
+    "Alt",
+    {
+      "a": 5,
+      "f": 3
+    },
+    "~\n\n\n\n\n\n#",
+    {
+      "a": 7
+    },
+    "",
+    {
+      "c": "#e1dbd1",
+      "f": 3,
+      "w": 2
+    },
+    "Space",
+    {
+      "c": "#84cbcb"
+    },
+    "",
+    {
+      "a": 5,
+      "f": 3
+    },
+    ")\n\n\n\n\n\n0",
+    {
+      "fa": [
+        1
+      ]
+    },
+    ">\n\n\n\n(altgr)\n\n.",
+    {
+      "a": 7
+    },
+    "",
+    "Menu"
+  ],
+  [
+    {
+      "y": 1,
+      "c": "#57c942"
+    },
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    {
+      "f": 3
+    },
+    "PGDN",
+    {
+      "f": 3
+    },
+    "PGUP",
+    "",
+    "",
+    ""
+  ],
+  [
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    {
+      "f": 3
+    },
+    "LEFT",
+    {
+      "f": 3
+    },
+    "DOWN",
+    {
+      "f": 3
+    },
+    "UP",
+    {
+      "f": 3
+    },
+    "RIGHT",
+    "",
+    ""
+  ],
+  [
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    {
+      "fa": [
+        2
+      ]
+    },
+    "ENTER"
+  ],
+  [
+    "",
+    "",
+    "",
+    "",
+    "",
+    {
+      "c": "#e1dbd1",
+      "f": 3,
+      "w": 2
+    },
+    "Space",
+    {
+      "c": "#57c942"
+    },
+    "",
+    "",
+    "",
+    "",
+    ""
+  ],
+  [
+    {
+      "y": 1,
+      "c": "#fd5151",
+      "f": 3
+    },
+    "Sysreq",
+    {
+      "f": 3
+    },
+    "F9",
+    {
+      "f": 3
+    },
+    "F10",
+    {
+      "f": 3
+    },
+    "F11",
+    {
+      "f": 3
+    },
+    "F12",
+    "",
+    "NUMLK",
+    {
+      "f": 3
+    },
+    "7",
+    {
+      "f": 3
+    },
+    "8",
+    {
+      "f": 3
+    },
+    "9",
+    {
+      "f": 3
+    },
+    "*",
+    {
+      "f": 3
+    },
+    "Bksp"
+  ],
+  [
+    "",
+    {
+      "f": 3
+    },
+    "F5",
+    {
+      "f": 3
+    },
+    "F6",
+    {
+      "f": 3
+    },
+    "F7",
+    {
+      "f": 3
+    },
+    "F8",
+    "",
+    "",
+    {
+      "f": 3
+    },
+    "4",
+    {
+      "f": 3
+    },
+    "5",
+    {
+      "f": 3
+    },
+    "6",
+    {
+      "f": 3
+    },
+    "/",
+    ""
+  ],
+  [
+    {
+      "f": 3
+    },
+    "Shift",
+    {
+      "f": 3
+    },
+    "F1",
+    {
+      "f": 3
+    },
+    "F2",
+    {
+      "f": 3
+    },
+    "F3",
+    {
+      "f": 3
+    },
+    "F4",
+    "",
+    "",
+    {
+      "f": 3
+    },
+    "1",
+    {
+      "f": 3
+    },
+    "2",
+    {
+      "f": 3
+    },
+    "3",
+    {
+      "f": 3
+    },
+    "+",
+    "KP_ENT"
+  ],
+  [
+    {
+      "f": 3
+    },
+    "Ctrl",
+    {
+      "f": 3
+    },
+    "GUI",
+    {
+      "f": 3
+    },
+    "Alt",
+    "",
+    {
+      "f": 3
+    },
+    "(qwerty)",
+    {
+      "c": "#e1dbd1",
+      "f": 3,
+      "w": 2
+    },
+    "Space",
+    {
+      "c": "#fd5151"
+    },
+    "",
+    {
+      "f": 3
+    },
+    "0",
+    {
+      "f": 3
+    },
+    ".",
+    {
+      "f": 3
+    },
+    "-",
+    ""
+  ]
+]

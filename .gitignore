@@ -15,6 +15,7 @@
 *.swp
 tags
 *~
+*.gch
 build/
 .build/
 *.bak
