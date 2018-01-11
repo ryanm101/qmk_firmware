@@ -62,7 +62,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  */
 [_LOWER] = KEYMAP( \
    KC_GRV,  KC_INSERT,   KC_PGUP,           KC_HOME,    KC_RBRC, _______,  KC_LPRN,    KC_7,    KC_8,              KC_9,   KC_RPRN, _______, \
-  _______,  KC_DELETE, KC_PGDOWN,            KC_END,    KC_LBRC, _______,   KC_EQL,    KC_4,    KC_5,              KC_6,   S(KC_8), _______, \
+  KC_CAPSLOCK,  KC_DELETE, KC_PGDOWN,            KC_END,    KC_LBRC, _______,   KC_EQL,    KC_4,    KC_5,              KC_6,   S(KC_8), _______, \
   KC_LSFT, KC_PSCREEN,   _______,           _______, TT(_NINJA), _______,  KC_MINS,    KC_1,    KC_2,              KC_3,   KC_SLSH,  KC_ENT, \
   KC_LCTL,    KC_LGUI,   KC_LALT,           KC_NUHS,    _______,      KC_SPC      , _______,    KC_0,    ALGR_T(KC_DOT), _______, KC_MENU \
 ),
