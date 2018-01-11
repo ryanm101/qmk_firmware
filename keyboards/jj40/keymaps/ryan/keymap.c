@@ -22,7 +22,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #define _LOWER  1
 #define _RAISE  2
 #define _NINJA  3
-#define KEYMAP KEYMAP_MIT
 
 enum custom_keycodes {
   QWERTY = SAFE_RANGE,
