@@ -82,7 +82,7 @@ void matrix_scan_user(void) {
 
     // activate backlighting pin?
     // if (backlight_config.enable == 1) { // turn on
-      DDRD &= ~(1 << 4); PORTD &= ~(1 << 4);
+      //DDRD &= ~(1 << 4); PORTD &= ~(1 << 4);
     // } else {  // turn off
       // DDRD |= (1 << 4); PORTD |= (1 << 4);
     // }
