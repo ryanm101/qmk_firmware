@@ -25,15 +25,31 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 #include "i2c.h"
 
-// for keyboard subdirectory level init functions
-void matrix_init_kb(void) {
-  // call user level keymaps
-  matrix_init_user();
-}
-
 #include "backlight.h"
+#include "backlight_custom.h"
 
 extern rgblight_config_t rgblight_config;
+
+// for keyboard subdirectory level init functions
+// @Override
+void matrix_init_kb(void) {
+  // call user level keymaps, if any
+  // matrix_init_user();
+}
+
+#ifdef BACKLIGHT_ENABLE
+void backlight_init_ports(void) {
+  b_led_init_ports();
+}
+
+void backlight_task(void) {
+  b_led_task();
+}
+
+void backlight_set(uint8_t level) {
+  b_led_set(level);
+}
+#endif
 
 // custom RGB driver
 void rgblight_set(void) {
@@ -51,42 +67,14 @@ void rgblight_set(void) {
 
 bool rgb_init = false;
 
-void led_set_user(uint8_t usb_led) {
-    if (usb_led & (1 << USB_LED_NUM_LOCK)) {
-        DDRD &= ~(1 << 0); PORTD &= ~(1 << 0);
-    } else {
-        DDRD |= (1 << 0); PORTD |= (1 << 0);
-    }
-
-    if (usb_led & (1 << USB_LED_CAPS_LOCK)) {
-        DDRD &= ~(1 << 4); PORTD &= ~(1 << 4); // originally (1 << 1), port/pin D1
-    } else {
-        DDRD |= (1 << 4); PORTD |= (1 << 4);
-    }
-
-    if (usb_led & (1 << USB_LED_SCROLL_LOCK)) {
-        DDRD &= ~(1 << 6); PORTD &= ~(1 << 6);
-    } else {
-        DDRD |= (1 << 6); PORTD |= (1 << 6);
-    }
-}
-
-__attribute__ ((weak))
 void matrix_scan_user(void) {
-    // if LEDs were previously on before poweroff, turn them back on
-    if (rgb_init == false && rgblight_config.enable) {
-      i2c_init();
-      i2c_send(0xb0, (uint8_t*)led, 3 * RGBLED_NUM);
-      rgb_init = true;
-    }
+  // if LEDs were previously on before poweroff, turn them back on
+  if (rgb_init == false && rgblight_config.enable) {
+    i2c_init();
+    i2c_send(0xb0, (uint8_t*)led, 3 * RGBLED_NUM);
+    rgb_init = true;
+  }
 
-    // activate backlighting pin?
-    // if (backlight_config.enable == 1) { // turn on
-      //DDRD &= ~(1 << 4); PORTD &= ~(1 << 4);
-    // } else {  // turn off
-      // DDRD |= (1 << 4); PORTD |= (1 << 4);
-    // }
-
-    rgblight_task();
-    /* Nothing else for now. */
+  rgblight_task();
+  /* Nothing else for now. */
 }
