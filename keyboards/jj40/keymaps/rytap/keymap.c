@@ -2,6 +2,8 @@
 #include "action_layer.h"
 
 #define _______ KC_TRNS
+#define XXXXXXX KC_NO
+
 #define _QWERTY 0
 #define _L1  1
 #define _L2  2
@@ -70,10 +72,10 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * `-----------------------------------------------------------------------------------'
  */
 [_L1] = KEYMAP( \
-   KC_GRV,  KC_INSERT,   KC_PGUP,  KC_HOME,   ANGUL, _______,   PARAN,    KC_7,  KC_8,           KC_9, _______, _______, \
-  _______,  KC_DELETE, KC_PGDOWN,   KC_END,   SQUAR,   CURLY,  KC_EQL,    KC_4,  KC_5,           KC_6, S(KC_8), _______, \
-  KC_LSFT, KC_PSCREEN,   _______,   CADCAE, MO(_L3), _______, KC_MINS,    KC_1,  KC_2,           KC_3, KC_SLSH,  KC_ENT, \
-  KC_LCTL,    KC_LGUI,   KC_LALT,  KC_NUHS, _______,      KC_SPC     , _______,  KC_0, ALGR_T(KC_DOT), _______, KC_MENU \
+   KC_GRV,  KC_INSERT,   KC_PGUP,  KC_HOME,   ANGUL, XXXXXXX,   PARAN,    KC_7,  KC_8,           KC_9, XXXXXXX, XXXXXXX, \
+  XXXXXXX,  KC_DELETE, KC_PGDOWN,   KC_END,   SQUAR,   CURLY,  KC_EQL,    KC_4,  KC_5,           KC_6, S(KC_8), XXXXXXX, \
+  KC_LSFT, KC_PSCREEN,   XXXXXXX,   CADCAE, MO(_L3), XXXXXXX, KC_MINS,    KC_1,  KC_2,           KC_3, KC_SLSH,  KC_ENT, \
+  KC_LCTL,    KC_LGUI,   KC_LALT,  KC_NUHS, XXXXXXX,      KC_SPC     , XXXXXXX,  KC_0, ALGR_T(KC_DOT), XXXXXXX, KC_MENU \
 ),
 
 /* L2
@@ -88,10 +90,10 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * `-----------------------------------------------------------------------------------'
  */
  [_L2] = KEYMAP( \
-      KC_SYSREQ,   KC_F9,  KC_F10,  KC_F11,      KC_F12, _______, KC_NUMLOCK, KC_KP_7, KC_KP_8,   KC_KP_9, KC_KP_ASTERISK,     KC_BSPC, \
-        _______,   KC_F5,   KC_F6,   KC_F7,       KC_F8, _______,    _______, KC_KP_4, KC_KP_5,   KC_KP_6,    KC_KP_SLASH,     _______, \
-        _______,   KC_F1,   KC_F2,   KC_F3,       KC_F4, _______,    _______, KC_KP_1, KC_KP_2,   KC_KP_3,     KC_KP_PLUS, KC_KP_ENTER, \
-        KC_LCTL, KC_LGUI, KC_LALT, _______,     _______,        KC_SPC      , _______, KC_KP_0, KC_KP_DOT,    KC_KP_MINUS,      _______ \
+      KC_SYSREQ,   KC_F9,  KC_F10,  KC_F11,      KC_F12, XXXXXXX, KC_NUMLOCK, KC_KP_7, KC_KP_8,   KC_KP_9, KC_KP_ASTERISK,     KC_BSPC, \
+        XXXXXXX,   KC_F5,   KC_F6,   KC_F7,       KC_F8, XXXXXXX,    XXXXXXX, KC_KP_4, KC_KP_5,   KC_KP_6,    KC_KP_SLASH,     _______, \
+        XXXXXXX,   KC_F1,   KC_F2,   KC_F3,       KC_F4, XXXXXXX,    XXXXXXX, KC_KP_1, KC_KP_2,   KC_KP_3,     KC_KP_PLUS, KC_KP_ENTER, \
+        KC_LCTL, KC_LGUI, KC_LALT, XXXXXXX,     XXXXXXX,        KC_SPC      , XXXXXXX, KC_KP_0, KC_KP_DOT,    KC_KP_MINUS,      _______ \
  ),
 
 /* L3
@@ -106,10 +108,10 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * `-----------------------------------------------------------------------------------'
  */
  [_L3] = KEYMAP( \
-    RGB_TOG, RGB_HUI, RGB_HUD, RGB_SAI, RGB_SAD,  _______, _______,   KC_PGDOWN, KC_PGUP,  _______, _______, _______, \
-    BL_TOGG, BL_STEP, RGB_VAI, RGB_VAD, RGB_MOD, RGB_RMOD, KC_LEFT,     KC_DOWN,   KC_UP, KC_RIGHT, _______, _______, \
-       TMUX, _______, _______, _______, _______,  _______, _______,     _______, _______,  _______, _______,  KC_ENT, \
-    _______, _______, _______, _______, _______,       KC_SPC     ,     _______, _______,  _______, _______, _______ \
+    RGB_TOG, RGB_HUI, RGB_HUD, RGB_SAI, RGB_SAD,  XXXXXXX, XXXXXXX,   KC_PGDOWN, KC_PGUP,  XXXXXXX, XXXXXXX, XXXXXXX, \
+    BL_TOGG, BL_STEP, RGB_VAI, RGB_VAD, RGB_MOD, RGB_RMOD, KC_LEFT,     KC_DOWN,   KC_UP, KC_RIGHT, XXXXXXX, XXXXXXX, \
+       TMUX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,  XXXXXXX, XXXXXXX,     XXXXXXX, XXXXXXX,  XXXXXXX, XXXXXXX,  KC_ENT, \
+    XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,       KC_SPC     ,     XXXXXXX, XXXXXXX,  XXXXXXX, XXXXXXX, XXXXXXX \
  )
 };
 
