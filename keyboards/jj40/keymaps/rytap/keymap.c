@@ -25,6 +25,7 @@ enum custom_keycodes {
 #define CURLY TD(CUR)
 #define SQUAR TD(SQU)
 #define ANGUL TD(ANG)
+#define TMUX TD(TD_TMUX)
 
 enum {
   CLN = 0,
@@ -32,6 +33,7 @@ enum {
   CUR,
   SQU,
   ANG,
+  TD_TMUX,
 };
 
 
@@ -106,7 +108,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  [_L3] = KEYMAP( \
     RGB_TOG, RGB_HUI, RGB_HUD, RGB_SAI, RGB_SAD,  _______, _______,   KC_PGDOWN, KC_PGUP,  _______, _______, _______, \
     BL_TOGG, BL_STEP, RGB_VAI, RGB_VAD, RGB_MOD, RGB_RMOD, KC_LEFT,     KC_DOWN,   KC_UP, KC_RIGHT, _______, _______, \
-    _______, _______, _______, _______, _______,  _______, _______,     _______, _______,  _______, _______,  KC_ENT, \
+       TMUX, _______, _______, _______, _______,  _______, _______,     _______, _______,  _______, _______,  KC_ENT, \
     _______, _______, _______, _______, _______,       KC_SPC     ,     _______, _______,  _______, _______, _______ \
  )
 };
@@ -153,6 +155,7 @@ void paranthesis_dance (qk_tap_dance_state_t *state, void *user_data) {
       SEND_STRING(")");
     }
 }
+
 void curly_dance (qk_tap_dance_state_t *state, void *user_data) {
     if (state->count == 1) {
       SEND_STRING("{}"); register_code(KC_LEFT); unregister_code(KC_LEFT);
@@ -183,6 +186,19 @@ void angular_dance (qk_tap_dance_state_t *state, void *user_data) {
     }
 }
 
+void tmux_dance (qk_tap_dance_state_t *state, void *user_data) {
+  if (state->count == 1) {
+      SEND_STRING("tmux"); register_code(KC_ENT); unregister_code(KC_ENT);
+    } else if (state->count == 2) {
+      register_mods(MOD_BIT(KC_LCTRL));
+      register_code(KC_B); unregister_code(KC_B);
+      unregister_mods(MOD_BIT(KC_LCTRL));
+      register_mods(MOD_BIT(KC_LSHIFT));
+      register_code(KC_5); unregister_code(KC_5);
+      unregister_mods(MOD_BIT(KC_LSHIFT));
+    }
+}
+
  //All tap dance functions would go here. Only showing this one.
  qk_tap_dance_action_t tap_dance_actions[] = {
    [CLN] = ACTION_TAP_DANCE_DOUBLE (KC_SCLN, S(KC_SCLN ))
@@ -190,6 +206,7 @@ void angular_dance (qk_tap_dance_state_t *state, void *user_data) {
    ,[CUR] = ACTION_TAP_DANCE_FN_ADVANCED( NULL, NULL, curly_dance )
    ,[SQU] = ACTION_TAP_DANCE_FN_ADVANCED( NULL, NULL, square_dance )
    ,[ANG] = ACTION_TAP_DANCE_FN_ADVANCED( NULL, NULL, angular_dance )
+   ,[TD_TMUX] = ACTION_TAP_DANCE_FN_ADVANCED( NULL, NULL, tmux_dance )
   //,[TD_GCO] = ACTION_TAP_DANCE_FN (send_gitcheckout)
   //[CT_CLN] = ACTION_TAP_DANCE_FN_ADVANCED (NULL, dance_cln_finished, dance_cln_reset)
  };
