@@ -100,7 +100,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * |------+------+------+------+------+-------------+------+------+------+------+------|
  * |BLTOG |BLSTEP|RGBVAI|RGBVAD|RGBMOD|RGBRMD| Left | Down |  Up  | Right|      |      |
  * |------+------+------+------+------+------|------+------+------+------+------+------|
- * |      |      |      |      |      |      |      |      |      |      |      |Enter |
+ * | TMUX |      |      |      |      |      |      |      |      |      |      |Enter |
  * |------+------+------+------+------+------+------+------+------+------+------+------|
  * |      |      |      |      |      |    Space    |      |      |      |      |      |
  * `-----------------------------------------------------------------------------------'
@@ -112,38 +112,6 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     _______, _______, _______, _______, _______,       KC_SPC     ,     _______, _______,  _______, _______, _______ \
  )
 };
-/*
- void dance_cln_finished (qk_tap_dance_state_t *state, void *user_data) {
-   if (state->count == 1) {
-     register_code (KC_RSFT);
-     register_code (KC_SCLN);
-   } else {
-     register_code (KC_SCLN);
-   }
- }
-
- void dance_cln_reset (qk_tap_dance_state_t *state, void *user_data) {
-   if (state->count == 1) {
-     unregister_code (KC_RSFT);
-     unregister_code (KC_SCLN);
-   } else {
-     unregister_code (KC_SCLN);
-   }
- }
-
- void send_gitcheckout (qk_tap_dance_state_t *state, void *user_data) {
-  if (state->count == 1) {
-    SEND_STRING ("git checkout");
-    reset_tap_dance (state);
-  }
- }
- void send_gitcheckout (qk_tap_dance_state_t *state, void *user_data) {
-  if (state->count == 1) {
-    SEND_STRING ("tmux");
-    reset_tap_dance (state);
-  }
- }
-*/
 
 // Parantheses
 void paranthesis_dance (qk_tap_dance_state_t *state, void *user_data) {
@@ -207,6 +175,4 @@ void tmux_dance (qk_tap_dance_state_t *state, void *user_data) {
    ,[SQU] = ACTION_TAP_DANCE_FN_ADVANCED( NULL, NULL, square_dance )
    ,[ANG] = ACTION_TAP_DANCE_FN_ADVANCED( NULL, NULL, angular_dance )
    ,[TD_TMUX] = ACTION_TAP_DANCE_FN_ADVANCED( NULL, NULL, tmux_dance )
-  //,[TD_GCO] = ACTION_TAP_DANCE_FN (send_gitcheckout)
-  //[CT_CLN] = ACTION_TAP_DANCE_FN_ADVANCED (NULL, dance_cln_finished, dance_cln_reset)
  };
