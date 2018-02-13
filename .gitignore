@@ -53,6 +53,7 @@ util/Win_Check_Output.txt
 .vscode/last.sql
 .vscode/temp.sql
 .stfolder
+.tags
 
 # ignore image files
 *.png
