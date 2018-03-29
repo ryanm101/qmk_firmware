@@ -5,6 +5,7 @@
 #define XXXXXXX KC_NO
 
 // Custom Key Combos
+#define LCKSCR LCTL(LGUI(KC_Q))
 //#define KC_CAD LCTL(LALT(KC_DEL)) // CTL+ALT+DEL (windows)
 //#define KC_CAE LGUI(LALT(KC_ESC)) // CMD+ALT+ESC (Force Close)
 //#define KC_SCREENSHOT LGUI(S(KC_4)) // CMD+SHIFT+4 (Mac Screenshot)
@@ -32,6 +33,7 @@ enum custom_keycodes {
 #define ANGUL TD(ANG)
 #define TMUX TD(TD_TMUX)
 #define CADCAE TD(CAD_CAE)
+#define SHIFTSLASHPIPE TD(TD_SHIFTSLASHPIPE)
 
 enum {
   CLN = 0,
@@ -42,6 +44,7 @@ enum {
   SQU,
   ANG,
   TD_TMUX,
+  TD_SHIFTSLASHPIPE,
 };
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
@@ -87,7 +90,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * |------+------+------+------+------+-------------+------+------+------+------+------|
  * |      |DELETE| PGDN | END  |  []  |  {}  |  =+  |  4$  |  5%  |  6^  |  *   | LMAC |
  * |------+------+------+------+------+------|------+------+------+------+------+------|
- * |LSHIFT|PSCRN |      |CADCAE|  L3  |      |  -_  |  1!  |  2"  |  3£  |  /?  |ENTER |
+ * |LSHIFT|PSCRN |      |CADCAE|  L3  |LCKSCR|  -_  |  1!  |  2"  |  3£  |  /?  |ENTER |
  * |------+------+------+------+------+------+------+------+------+------+------+------|
  * | Ctrl | GUI  | Alt  |  #~  |      |    Space    |      |   0) |  .>  |      | MENU |
  * `-----------------------------------------------------------------------------------'
@@ -95,7 +98,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 [_L1] = KEYMAP( \
    KC_GRV,  KC_INSERT,   KC_PGUP,  KC_HOME,   ANGUL, XXXXXXX,   PARAN,    KC_7,  KC_8,           KC_9, XXXXXXX, KC_BSPC, \
   XXXXXXX,  KC_DELETE, KC_PGDOWN,   KC_END,   SQUAR,   CURLY,  KC_EQL,    KC_4,  KC_5,           KC_6, S(KC_8), TG(_QWERTYMAC), \
-  _______, KC_PSCREEN,   XXXXXXX,   CADCAE, MO(_L3), XXXXXXX, KC_MINS,    KC_1,  KC_2,           KC_3, KC_SLSH,  KC_ENT, \
+  _______, KC_PSCREEN,   XXXXXXX,   CADCAE, MO(_L3), LCKSCR, KC_MINS,    KC_1,  KC_2,           KC_3, KC_SLSH,  KC_ENT, \
   _______,    _______,   _______,  KC_NUHS, XXXXXXX,      KC_SPC     , XXXXXXX,  KC_0, ALGR_T(KC_DOT), XXXXXXX, KC_MENU \
 ),
 
@@ -213,7 +216,33 @@ void cmd_dance (qk_tap_dance_state_t *state, void *user_data) {
     unregister_mods(MOD_BIT(KC_LSHIFT));
     unregister_code(KC_4);
   }
-} 
+}
+
+void cmd_sft_slash_pipe_down (qk_tap_dance_state_t *state, void *user_data) { 
+  if (state->count == 1) {
+    if (state->interrupted || state->pressed==0) {
+      register_code (KC_NONUS_BSLASH);
+    } else {
+      register_code (KC_LSFT); 
+    }
+  } else if (state->count == 2) {
+    register_mods(MOD_BIT(KC_LSFT));
+    register_code(KC_NONUS_BSLASH);
+  }
+}
+
+void cmd_sft_slash_pipe_up (qk_tap_dance_state_t *state, void *user_data) { 
+  if (state->count == 1) { 
+    if (keyboard_report->mods & MOD_BIT(KC_LSFT)) { 
+      unregister_code (KC_LSFT); 
+    } else {
+      unregister_code (KC_NONUS_BSLASH);
+    }
+  } else if (state->count == 2) {
+    unregister_mods(MOD_BIT(KC_LSFT));
+    unregister_code(KC_NONUS_BSLASH);
+  }
+}
 
  //All tap dance functions would go here. Only showing this one.
  qk_tap_dance_action_t tap_dance_actions[] = {
@@ -225,4 +254,5 @@ void cmd_dance (qk_tap_dance_state_t *state, void *user_data) {
    ,[SQU] = ACTION_TAP_DANCE_FN_ADVANCED( NULL, NULL, square_dance )
    ,[ANG] = ACTION_TAP_DANCE_FN_ADVANCED( NULL, NULL, angular_dance )
    ,[TD_TMUX] = ACTION_TAP_DANCE_FN_ADVANCED( NULL, NULL, tmux_dance )
+   ,[TD_SHIFTSLASHPIPE] = ACTION_TAP_DANCE_FN_ADVANCED (NULL, cmd_sft_slash_pipe_down, cmd_sft_slash_pipe_up) 
  };
