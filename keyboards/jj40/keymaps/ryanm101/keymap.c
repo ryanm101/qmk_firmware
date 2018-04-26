@@ -32,6 +32,8 @@ enum custom_keycodes {
 #define SQUAR TD(SQU)
 #define ANGUL TD(ANG)
 #define TMUX TD(TD_TMUX)
+#define GIT TD(TD_GIT)
+
 #define CADCAE TD(CAD_CAE)
 #define SHIFTSLASHPIPE TD(TD_SHIFTSLASHPIPE)
 
@@ -44,6 +46,7 @@ enum {
   SQU,
   ANG,
   TD_TMUX,
+  TD_GIT,
   TD_SHIFTSLASHPIPE,
 };
 
@@ -126,7 +129,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * |------+------+------+------+------+-------------+------+------+------+------+------|
  * |BLTOG |BLSTEP|RGBVAI|RGBVAD|RGBMOD|RGBRMD| Left | Down |  Up  | Right|      |      |
  * |------+------+------+------+------+------|------+------+------+------+------+------|
- * | TMUX |      |      |      |      |      |      |      |      |      |      |Enter |
+ * | TMUX | GIT  |      |      |      |      |      |      |      |      |      |Enter |
  * |------+------+------+------+------+------+------+------+------+------+------+------|
  * |      |      |      |      |      |    Space    |      |      |      |      |      |
  * `-----------------------------------------------------------------------------------'
@@ -134,7 +137,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  [_L3] = KEYMAP( \
     RGB_TOG, RGB_HUI, RGB_HUD, RGB_SAI, RGB_SAD,  XXXXXXX, XXXXXXX,   KC_PGDOWN, KC_PGUP,  XXXXXXX, XXXXXXX, XXXXXXX, \
     BL_TOGG, BL_STEP, RGB_VAI, RGB_VAD, RGB_MOD, RGB_RMOD, KC_LEFT,     KC_DOWN,   KC_UP, KC_RIGHT, XXXXXXX, XXXXXXX, \
-       TMUX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,  XXXXXXX, XXXXXXX,     XXXXXXX, XXXXXXX,  XXXXXXX, XXXXXXX,  KC_ENT, \
+       TMUX, GIT, XXXXXXX, XXXXXXX, XXXXXXX,  XXXXXXX, XXXXXXX,     XXXXXXX, XXXXXXX,  XXXXXXX, XXXXXXX,  KC_ENT, \
     XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,       KC_SPC     ,     XXXXXXX, XXXXXXX,  XXXXXXX, XXXXXXX, XXXXXXX \
  )
 };
@@ -190,6 +193,12 @@ void tmux_dance (qk_tap_dance_state_t *state, void *user_data) {
     register_mods(MOD_BIT(KC_LSHIFT));
     register_code(KC_5); unregister_code(KC_5);
     unregister_mods(MOD_BIT(KC_LSHIFT));
+  }
+}
+
+void git_dance (qk_tap_dance_state_t *state, void *user_data) {
+  if (state->count == 1) {
+    SEND_STRING("git checkout $1"); //register_code(KC_ENT); unregister_code(KC_ENT);
   }
 }
 
@@ -254,5 +263,6 @@ void cmd_sft_slash_pipe_up (qk_tap_dance_state_t *state, void *user_data) {
    ,[SQU] = ACTION_TAP_DANCE_FN_ADVANCED( NULL, NULL, square_dance )
    ,[ANG] = ACTION_TAP_DANCE_FN_ADVANCED( NULL, NULL, angular_dance )
    ,[TD_TMUX] = ACTION_TAP_DANCE_FN_ADVANCED( NULL, NULL, tmux_dance )
+   ,[TD_GIT] = ACTION_TAP_DANCE_FN_ADVANCED( NULL, NULL, git_dance )
    ,[TD_SHIFTSLASHPIPE] = ACTION_TAP_DANCE_FN_ADVANCED (NULL, cmd_sft_slash_pipe_down, cmd_sft_slash_pipe_up) 
  };
