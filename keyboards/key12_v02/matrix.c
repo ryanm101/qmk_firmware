@@ -43,7 +43,7 @@ static inline char port_char(pin_t pin) {
 
 void matrix_init(void) {
     for (uint8_t i = 0; i < N_CAND; i++) {
-        setPinInputHigh(CANDIDATES[i]);
+        gpio_set_pin_input_high(CANDIDATES[i]);
     }
     memset(raw_matrix, 0, sizeof(raw_matrix));
 }
@@ -53,7 +53,7 @@ uint8_t matrix_scan(void) {
 
     /* ── Phase 1: passive read (encoder buttons, direct-to-GND) ─── */
     for (uint8_t c = 0; c < N_CAND; c++) {
-        if (!readPin(CANDIDATES[c])) {
+        if (!gpio_read_pin(CANDIDATES[c])) {
             row0 |= (matrix_row_t)(1u << c);
             uprintf("PASSIVE LOW: P%c%u (idx %u)\n",
                     port_char(CANDIDATES[c]),
@@ -64,13 +64,13 @@ uint8_t matrix_scan(void) {
 
     /* ── Phase 2: active scan (matrix keys via row drive) ───────── */
     for (uint8_t r = 0; r < N_CAND; r++) {
-        setPinOutput(CANDIDATES[r]);
-        writePinLow(CANDIDATES[r]);
+        gpio_set_pin_output(CANDIDATES[r]);
+        gpio_write_pin_low(CANDIDATES[r]);
         wait_us(10);
 
         for (uint8_t c = 0; c < N_CAND; c++) {
             if (c == r) continue;
-            if (!readPin(CANDIDATES[c])) {
+            if (!gpio_read_pin(CANDIDATES[c])) {
                 uprintf("ACTIVE P%c%u->P%c%u (r=%u c=%u)\n",
                         port_char(CANDIDATES[r]),
                         (unsigned)PAL_PAD(CANDIDATES[r]),
@@ -82,7 +82,7 @@ uint8_t matrix_scan(void) {
             }
         }
 
-        setPinInputHigh(CANDIDATES[r]);
+        gpio_set_pin_input_high(CANDIDATES[r]);
     }
 
     uint8_t changed = (row0 != raw_matrix[0]);
