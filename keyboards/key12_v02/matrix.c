@@ -1,97 +1,113 @@
 /*
- * Debug matrix scanner for KEY12-V02 / CH579M.
+ * KEY12-V02 / CH579M custom matrix — direct-to-GND pins.
  *
- * STRATEGY:
- *   1. Passive read: all candidate pins held INPUT_PULLUP.  Any pin that reads
- *      LOW without driving is an encoder button or direct-to-GND switch.
- *      e.g. the BOOT key (PB22) pulls its pin to GND when pressed.
- *   2. Active scan: drive each candidate LOW one at a time, read all others.
- *      Any that reads LOW while driven = matrix key connection.
+ * All pins configured INPUT_PULLUP. Press = pin pulled low = bit set in row.
  *
- * In both cases the detected pin index is printed via uprintf so you can see
- * which GPIO corresponds to which physical key (run `qmk console` on host).
+ * Pin map (col idx → pin → role):
+ *   0=B2   encoder 1 press (confirmed)
+ *   1=B13  unknown
+ *   2=B19  R  — key (row=0, col=0)
+ *   3=B20  S  — key (row=1, col=0)
+ *   4=B21  T  — key (row=0, col=1)
+ *   5=B22  U  — key (row=2, col=0)
+ *   6=A1   unknown
+ *   7=A2   X  — key (row=2, col=2)
  *
- * CANDIDATES (B0-B9, B12-B23, A0-A5 = 28 pins):
- *   idx  0=B0   1=B1   2=B2   3=B3   4=B4   5=B5   6=B6   7=B7
- *   idx  8=B8   9=B9  10=B12 11=B13 12=B14 13=B15 14=B16 15=B17
- *   idx 16=B18 17=B19 18=B20 19=B21 20=B22 21=B23
- *   idx 22=A0  23=A1  24=A2  25=A3  26=A4  27=A5
+ * Encoder phase pins (NOT in this list — handled by QMK encoder driver):
+ *   enc1: B10 (phase-A/CW), B11 (phase-B/CCW)
+ *   enc2: A0  (phase-A/CW), A5  (phase-B/CCW)
  *
- * B10/B11 excluded (USB D-/D+).
- *
- * keyboard.json must have MATRIX_ROWS=1, MATRIX_COLS=28.
+ * Physical layout (encoders at top, enc1 left, enc2 right):
+ *   col:  0    1    2
+ *   enc: [ENC1]    [ENC2]
+ *   r=0: [R]  [T]  [??]
+ *   r=1: [S]  [??] [??]
+ *   r=2: [U]  [??] [X]
  */
 
 #include "quantum.h"
 
-static const pin_t CANDIDATES[] = {
-    B0,  B1,  B2,  B3,  B4,  B5,  B6,  B7,
-    B8,  B9,  B12, B13, B14, B15, B16, B17,
-    B18, B19, B20, B21, B22, B23,
-    A0,  A1,  A2,  A3,  A4,  A5,
+static const pin_t KEY_PINS[] = {
+    B2, B13, B19, B20, B21, B22, A1, A2,
 };
-#define N_CAND ((uint8_t)(sizeof(CANDIDATES) / sizeof(CANDIDATES[0])))
+#define N_KEYS ((uint8_t)(sizeof(KEY_PINS) / sizeof(KEY_PINS[0])))
 
-_Static_assert(N_CAND == MATRIX_COLS, "MATRIX_COLS must equal N_CAND");
+_Static_assert(N_KEYS == MATRIX_COLS, "MATRIX_COLS must equal N_KEYS (8)");
 
-static matrix_row_t raw_matrix[MATRIX_ROWS];
+/* Direct bit positions for fast PIN register reads */
+static const uint8_t pb_bit[N_KEYS] = {2, 13, 19, 20, 21, 22, 0xFF, 0xFF};
+static const uint8_t pa_bit[N_KEYS] = {0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 1, 2};
 
-/* Pin name helpers for uprintf */
-static inline char port_char(pin_t pin) {
-    return (PAL_PORT(pin) == GPIOA) ? 'A' : 'B';
-}
-
-void matrix_init(void) {
-    for (uint8_t i = 0; i < N_CAND; i++) {
-        gpio_set_pin_input_high(CANDIDATES[i]);
+void matrix_init_custom(void) {
+    for (uint8_t i = 0; i < N_KEYS; i++) {
+        palSetPadMode(PAL_PORT(KEY_PINS[i]), PAL_PAD(KEY_PINS[i]),
+                      PAL_MODE_INPUT_PULLUP);
     }
-    memset(raw_matrix, 0, sizeof(raw_matrix));
 }
 
-uint8_t matrix_scan(void) {
+/*
+ * Eager debounce: register the first edge immediately, then lock out for
+ * LOCKOUT_MS so that contact bounce cannot generate spurious events.
+ */
+#define LOCKOUT_MS 150u
+
+bool matrix_scan_custom(matrix_row_t current_matrix[]) {
+    uint32_t pb_pin = R32_PB_PIN;
+    uint32_t pa_pin = R32_PA_PIN;
+
     matrix_row_t row0 = 0;
-
-    /* ── Phase 1: passive read (encoder buttons, direct-to-GND) ─── */
-    for (uint8_t c = 0; c < N_CAND; c++) {
-        if (!gpio_read_pin(CANDIDATES[c])) {
-            row0 |= (matrix_row_t)(1u << c);
-            uprintf("PASSIVE LOW: P%c%u (idx %u)\n",
-                    port_char(CANDIDATES[c]),
-                    (unsigned)PAL_PAD(CANDIDATES[c]),
-                    (unsigned)c);
-        }
+    for (uint8_t i = 0; i < N_KEYS; i++) {
+        uint32_t bit = (pb_bit[i] != 0xFF)
+            ? ((pb_pin >> pb_bit[i]) & 1U)
+            : ((pa_pin >> pa_bit[i]) & 1U);
+        if (!bit) row0 |= (matrix_row_t)(1u << i);
     }
 
-    /* ── Phase 2: active scan (matrix keys via row drive) ───────── */
-    for (uint8_t r = 0; r < N_CAND; r++) {
-        gpio_set_pin_output(CANDIDATES[r]);
-        gpio_write_pin_low(CANDIDATES[r]);
-        wait_us(10);
+    static uint32_t      lockout_since  = 0;
+    static bool          in_lockout     = false;
+    static matrix_row_t  last_committed = 0;
+    static uint32_t      scan_count     = 0;
 
-        for (uint8_t c = 0; c < N_CAND; c++) {
-            if (c == r) continue;
-            if (!gpio_read_pin(CANDIDATES[c])) {
-                uprintf("ACTIVE P%c%u->P%c%u (r=%u c=%u)\n",
-                        port_char(CANDIDATES[r]),
-                        (unsigned)PAL_PAD(CANDIDATES[r]),
-                        port_char(CANDIDATES[c]),
-                        (unsigned)PAL_PAD(CANDIDATES[c]),
-                        (unsigned)r, (unsigned)c);
-                /* Fire the drive-pin's column so each drive pin = unique key */
-                row0 |= (matrix_row_t)(1u << r);
-            }
-        }
+    scan_count++;
+    uint32_t now = timer_read32();
 
-        gpio_set_pin_input_high(CANDIDATES[r]);
+    if (current_matrix[0] != last_committed) {
+        uprintf("EXT sc=%lu cm=%04X was=%04X row=%04X t=%lu\n",
+                (unsigned long)scan_count,
+                (unsigned)current_matrix[0],
+                (unsigned)last_committed,
+                (unsigned)row0,
+                (unsigned long)now);
+        last_committed = current_matrix[0];
     }
 
-    uint8_t changed = (row0 != raw_matrix[0]);
-    raw_matrix[0]   = row0;
-    return changed;
-}
+    if (in_lockout) {
+        if (now - lockout_since < LOCKOUT_MS) {
+            return false;
+        }
+        in_lockout = false;
+        if (row0 != current_matrix[0]) {
+            uprintf("LKEXP cm=%04X->%04X t=%lu sc=%lu\n",
+                    (unsigned)current_matrix[0], (unsigned)row0,
+                    (unsigned long)now, (unsigned long)scan_count);
+            current_matrix[0] = row0;
+            last_committed     = row0;
+            lockout_since      = now;
+            in_lockout         = true;
+            return true;
+        }
+        return false;
+    }
 
-matrix_row_t matrix_get_row(uint8_t row) {
-    return raw_matrix[row];
+    if (row0 != current_matrix[0]) {
+        uprintf("EDGE cm=%04X->%04X t=%lu sc=%lu\n",
+                (unsigned)current_matrix[0], (unsigned)row0,
+                (unsigned long)now, (unsigned long)scan_count);
+        current_matrix[0] = row0;
+        last_committed     = row0;
+        lockout_since      = now;
+        in_lockout         = true;
+        return true;
+    }
+    return false;
 }
-
-void matrix_print(void) {}

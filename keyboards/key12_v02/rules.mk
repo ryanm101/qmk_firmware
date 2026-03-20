@@ -11,13 +11,11 @@ AUDIO_ENABLE     = no
 RGBLIGHT_ENABLE  = no
 BOOTMAGIC_ENABLE = no   # needs EEPROM — not implemented yet
 MOUSEKEY_ENABLE  = no
-EXTRAKEY_ENABLE  = no   # adds USB descriptors — disable until USB baseline works
+EXTRAKEY_ENABLE  = yes  # needed for KC_VOLU/VOLD consumer codes
 NKRO_ENABLE      = no   # adds USB descriptors — disable until USB baseline works
-ENCODER_ENABLE   = no   # disable until matrix pins are confirmed
+ENCODER_ENABLE   = yes  # encoder 2: A0(CW)/A5(CCW) confirmed; encoder 1 pins TBD
 
-# Debug: brute-force GPIO scanner — prints row/col pin names over USB console.
-# Run `qmk console` on the host to see output while pressing keys.
-# Once pins are confirmed, set CUSTOM_MATRIX = no and fill in keyboard.json.
 CONSOLE_ENABLE   = yes
-CUSTOM_MATRIX    = yes
-SRC             += matrix.c
+KEYBOARD_SHARED_EP = no
+CUSTOM_MATRIX    = lite
+SRC             += matrix.c hooks.c
