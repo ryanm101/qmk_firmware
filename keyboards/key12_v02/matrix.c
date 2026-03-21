@@ -14,8 +14,8 @@
  *   7=A2   X  — key (row=2, col=2)
  *
  * Encoder phase pins (NOT in this list — handled by QMK encoder driver):
- *   enc1: B10 (phase-A/CW), B11 (phase-B/CCW)
- *   enc2: A0  (phase-A/CW), A5  (phase-B/CCW)
+ *   enc1: B0  (phase-A/left), B1  (phase-B/right)
+ *   enc2: A0  (phase-A/CW),   A5  (phase-B/CCW)
  *
  * Physical layout (encoders at top, enc1 left, enc2 right):
  *   col:  0    1    2
@@ -43,6 +43,11 @@ void matrix_init_custom(void) {
         palSetPadMode(PAL_PORT(KEY_PINS[i]), PAL_PAD(KEY_PINS[i]),
                       PAL_MODE_INPUT_PULLUP);
     }
+    /* Enc1 phase pins — B0 (left/A) and B1 (right/B). Configure pull-ups
+     * here so the state is stable before encoder_init reads the initial
+     * quadrature position. */
+    palSetPadMode(GPIOB, 0, PAL_MODE_INPUT_PULLUP);
+    palSetPadMode(GPIOB, 1, PAL_MODE_INPUT_PULLUP);
 }
 
 /*
@@ -52,6 +57,22 @@ void matrix_init_custom(void) {
 #define LOCKOUT_MS 150u
 
 bool matrix_scan_custom(matrix_row_t current_matrix[]) {
+    /* Diagnostic: watch B0/B1 (enc1 phases) and A0/A5 (enc2 phases) directly */
+    {
+        static uint32_t prev_enc = 0xFFFFFFFFU;
+        uint32_t pb = R32_PB_PIN;
+        uint32_t pa = R32_PA_PIN;
+        uint32_t enc = ((pb >> 0) & 1U)         /* B0  */
+                     | (((pb >> 1) & 1U) << 1)  /* B1  */
+                     | (((pa >> 0) & 1U) << 2)  /* A0  */
+                     | (((pa >> 5) & 1U) << 3);  /* A5  */
+        if (enc != prev_enc) {
+            uprintf("ENC_PIN B0=%u B1=%u A0=%u A5=%u\n",
+                    (unsigned)(enc & 1), (unsigned)((enc >> 1) & 1),
+                    (unsigned)((enc >> 2) & 1), (unsigned)((enc >> 3) & 1));
+            prev_enc = enc;
+        }
+    }
     uint32_t pb_pin = R32_PB_PIN;
     uint32_t pa_pin = R32_PA_PIN;
 

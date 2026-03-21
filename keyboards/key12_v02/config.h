@@ -25,4 +25,7 @@
  * Pin assignments live in keyboard.json "encoder.rotary"; QMK auto-generates
  * ENCODER_A_PINS / ENCODER_B_PINS from there into info_config.h. */
 #define ENCODER_RESOLUTION 4
+/* Fire encoder event on return-to-rest with any net movement.
+ * Tolerates bouncy quadrature signals (enc1 is electrically noisy). */
+#define ENCODER_DEFAULT_POS 0x3
 
