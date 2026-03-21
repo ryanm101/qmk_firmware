@@ -26,6 +26,15 @@ endef
 WCHISP ?= wchisp
 
 define EXEC_WCHISP
+	if ! lsusb -d 4348:55e0 > /dev/null 2>&1; then \
+		printf "$(MSG_BOOTLOADER_NOT_FOUND_QUICK_RETRY)" ;\
+		printf "Reset the board into ISP mode (hold BOOT low while plugging in).\n" ;\
+		while ! lsusb -d 4348:55e0 > /dev/null 2>&1; do \
+			printf "." ;\
+			sleep $(BOOTLOADER_RETRY_TIME) ;\
+		done ;\
+		printf "\n" ;\
+	fi
 	$(WCHISP) flash $(BUILD_DIR)/$(TARGET).bin
 endef
 
