@@ -13,7 +13,7 @@ BOOTMAGIC_ENABLE = no   # needs EEPROM — not implemented yet
 MOUSEKEY_ENABLE  = no
 EXTRAKEY_ENABLE  = yes  # needed for KC_VOLU/VOLD consumer codes
 NKRO_ENABLE      = no   # adds USB descriptors — disable until USB baseline works
-ENCODER_ENABLE   = yes  # encoder 2: A0(CW)/A5(CCW) confirmed; encoder 1 pins TBD
+ENCODER_ENABLE   = yes  # encoder 1: B0(CW)/B1(CCW), encoder 2: A0(CW)/A5(CCW)
 
 CONSOLE_ENABLE   = yes
 KEYBOARD_SHARED_EP = no
