@@ -1,7 +1,7 @@
 {
-    "manufacturer": "ryanm",
+    "manufacturer": "WCH",
     "keyboard_name": "ch579m_2e_12k",
-    "maintainer": "ryanm",
+    "maintainer": "Ryan McLean",
     "usb": {
         "vid": "0x1209",
         "pid": "0x0001",
