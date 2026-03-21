@@ -23,6 +23,12 @@ define EXEC_DFU_UTIL
 	$(DFU_UTIL) $(DFU_ARGS) -D $(BUILD_DIR)/$(TARGET).bin
 endef
 
+WCHISP ?= wchisp
+
+define EXEC_WCHISP
+	$(WCHISP) flash $(BUILD_DIR)/$(TARGET).bin
+endef
+
 WB32_DFU_UPDATER ?= wb32-dfu-updater_cli
 
 define EXEC_WB32_DFU_UPDATER
@@ -117,6 +123,8 @@ else ifeq ($(strip $(MCU_FAMILY)),AT32)
 	$(UNSYNC_OUTPUT_CMD) && $(call EXEC_DFU_UTIL)
 else ifeq ($(strip $(MCU_FAMILY)),GD32V)
 	$(UNSYNC_OUTPUT_CMD) && $(call EXEC_DFU_UTIL)
+else ifeq ($(strip $(MCU_FAMILY)),WCH)
+	$(UNSYNC_OUTPUT_CMD) && $(call EXEC_WCHISP)
 else
 	$(PRINT_OK); $(SILENT) || printf "$(MSG_FLASH_BOOTLOADER)"
 endif
