@@ -28,17 +28,37 @@
 #include "quantum.h"
 
 static const pin_t KEY_PINS[] = {
-    B2, B13, B19, B20, B21, B22, A1, A2,
+    /*  0  */ B2,   /* KC_A  ENC1 button */
+    /*  1  */ B19,  /* KC_C  r0c0        */
+    /*  2  */ B20,  /* KC_F  r1c0        */
+    /*  3  */ B21,  /* KC_D  r0c1        */
+    /*  4  */ B22,  /* KC_I  r2c0        */
+    /*  5  */ A1,   /* KC_N  r3c2        */
+    /*  6  */ A2,   /* KC_K  r2c2        */
+    /*  7  */ B15,  /* KC_L  r3c0        */
+    /*  8  */ A13,  /* KC_J  r2c1        */
+    /*  9  */ A14,  /* KC_M  r3c1        */
+    /* 10  */ A6,   /* KC_B  ENC2 button */
+    /* 11  */ A12,  /* KC_G  r1c1        */
+    /* 12  */ A15,  /* KC_E  r0c2        */
+    /* 13  */ A3,   /* KC_H  r1c2        */
 };
 #define N_KEYS ((uint8_t)(sizeof(KEY_PINS) / sizeof(KEY_PINS[0])))
 
-_Static_assert(N_KEYS == MATRIX_COLS, "MATRIX_COLS must equal N_KEYS (8)");
+_Static_assert(N_KEYS == MATRIX_COLS, "MATRIX_COLS must equal N_KEYS (14)");
 
-/* Direct bit positions for fast PIN register reads */
-static const uint8_t pb_bit[N_KEYS] = {2, 13, 19, 20, 21, 22, 0xFF, 0xFF};
-static const uint8_t pa_bit[N_KEYS] = {0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 1, 2};
+/* Direct bit positions for fast PIN register reads (0xFF = not on this port) */
+static const uint8_t pb_bit[N_KEYS] = {2, 19, 20, 21, 22, 0xFF, 0xFF, 15, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF};
+static const uint8_t pa_bit[N_KEYS] = {0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 1, 2, 0xFF, 13, 14, 6, 12, 15, 3};
 
 void matrix_init_custom(void) {
+    /* Clear analog-input-disable bits only for PA pins used as key inputs:
+     *   0x8000 = RB_PIN_ADC4_5_IE  → PA14(AIN4), PA15(AIN5)
+     *   0x4000 = RB_PIN_ADC2_3_IE  → PA3(AIN3) for r1c2
+     * Leaving all other PA ADC bits set prevents floating pins coupling
+     * into adjacent pull-up inputs. */
+    R16_PIN_ANALOG_IE &= ~(0x8000U | 0x4000U);
+
     for (uint8_t i = 0; i < N_KEYS; i++) {
         palSetPadMode(PAL_PORT(KEY_PINS[i]), PAL_PAD(KEY_PINS[i]),
                       PAL_MODE_INPUT_PULLUP);

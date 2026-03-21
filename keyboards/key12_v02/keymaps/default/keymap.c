@@ -1,25 +1,31 @@
 #include QMK_KEYBOARD_H
 
 /*
- * Default keymap — encoders at TOP, encoder 1 on LEFT, encoder 2 on RIGHT.
+ * Physical layout:
  *
- * Physical layout (row, col):
+ *         Col 0        Col 1        Col 2
+ *  Enc  KC_A / B2     —        KC_B / A6
+ *  r0   KC_C / B19  KC_D / B21  KC_E / A15
+ *  r1   KC_F / B20  KC_G / A12  KC_H / A3
+ *  r2   KC_I / B22  KC_J / A13  KC_K / A2
+ *  r3   KC_L / B15  KC_M / A14  KC_N / A1
  *
- *   [ENC1 press/B2]        [B13?]      <- encoder row
- *   (0,0) R   (0,1) T   [ ?? ]         <- key row 0
- *   (1,0) S   [ ?? ]    [ ?? ]         <- key row 1
- *   (2,0) U   [ ?? ]    (2,2) X        <- key row 2
- *
- * Encoder 1 (left):  B10=phase-A (CW), B11=phase-B (CCW). index=0.
- * Encoder 2 (right): A0=phase-A (CW),  A5=phase-B (CCW).  index=1.
- * B13 and A1: physical position unknown — KC_NO until confirmed.
+ * Encoder 1 (left):  B0=phase-A, B1=phase-B, B2=button
+ * Encoder 2 (right): A0=phase-A, A5=phase-B, A6=button
  */
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     [0] = LAYOUT(
-        KC_MUTE, KC_NO,        /* ENC1 press (B2), B13 unknown */
-        KC_R,    KC_T,         /* (0,0) R,          (0,1) T    */
-        KC_S,                  /* (1,0) S                       */
-        KC_U,    KC_NO, KC_X   /* (2,0) U, A1 unknown, (2,2) X */
+        KC_A,          /* idx  0  B2  ENC1 btn */
+        KC_C,  KC_D,   /* idx 1,3  B19 r0c0, B21 r0c1 */
+        KC_F,          /* idx  2  B20 r1c0 */
+        KC_I,          /* idx  4  B22 r2c0 */
+        KC_N,          /* idx  5  A1  r3c2 */
+        KC_K,          /* idx  6  A2  r2c2 */
+        KC_L,          /* idx  7  B15 r3c0 */
+        KC_J,  KC_M,   /* idx 8,9  A13 r2c1, A14 r3c1 */
+        KC_B,          /* idx 10  A6  ENC2 btn */
+        KC_G,          /* idx 11  A12 r1c1 */
+        KC_E,  KC_H    /* idx 12,13  A15 r0c2, A3 r1c2 */
     )
 };
 
