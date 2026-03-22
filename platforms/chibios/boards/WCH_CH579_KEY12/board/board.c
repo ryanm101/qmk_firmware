@@ -1,3 +1,6 @@
+// Copyright 2026 Ryan McLean
+// SPDX-License-Identifier: GPL-2.0-or-later
+
 #include "hal.h"
 
 void __early_init(void) {

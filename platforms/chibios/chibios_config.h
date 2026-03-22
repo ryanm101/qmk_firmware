@@ -188,7 +188,7 @@
 #    define PAL_OUTPUT_SPEED_HIGHEST 0
 #endif
 
-// WCH CH579 compatibility
+/* WCH CH579 compatibility */
 #if defined(CH579_SYSCLK)
 #    define CPU_CLOCK CH579_SYSCLK
 #endif
