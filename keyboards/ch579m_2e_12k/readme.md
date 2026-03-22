@@ -4,7 +4,7 @@ A 12-key macropad with 2 rotary encoders, built on the WCH CH579M ARM Cortex-M0 
 
 * Keyboard Maintainer: [Ryan McLean](https://github.com/ryanm101)
 * Hardware Supported: Custom PCB, CH579M MCU
-* Hardware Availability: Custom build
+* Hardware Availability: [12 Key 2 Knob Mini Mechanical Keyboard](https://www.aliexpress.com/item/1005011856410871.html)
 
 Make example for this keyboard (after setting up your build environment):
 
